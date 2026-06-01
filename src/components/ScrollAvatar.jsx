@@ -1,9 +1,13 @@
 import { useEffect, useRef } from 'react'
+import { useNavigate, useLocation } from 'react-router-dom'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import './ScrollAvatar.css'
 
 export default function ScrollAvatar() {
+  const navigate = useNavigate()
+  const { pathname } = useLocation()
+  const isHome = pathname === '/'
   const ref = useRef()
   const animRef = useRef(null)
 
@@ -64,6 +68,11 @@ export default function ScrollAvatar() {
 
     createAnimation()
 
+    // On non-home pages, always make avatar clickable
+    if (!isHome) {
+      el.classList.add('scroll-avatar--clickable')
+    }
+
     const handleResize = () => {
       // Recreate animation on resize with new viewport
       createAnimation()
@@ -78,10 +87,10 @@ export default function ScrollAvatar() {
         animRef.current.kill()
       }
     }
-  }, [])
+  }, [isHome])
 
   function handleClick() {
-    window.scrollTo({ top: 0, behavior: 'smooth' })
+    navigate('/')
   }
 
   return (
