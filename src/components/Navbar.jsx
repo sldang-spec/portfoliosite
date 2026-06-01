@@ -1,5 +1,6 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { Link, useLocation } from 'react-router-dom'
+import { gsap } from 'gsap'
 import './Navbar.css'
 
 export default function Navbar() {
@@ -10,6 +11,11 @@ export default function Navbar() {
   const [worksActive, setWorksActive] = useState(false)
   const [aboutActive, setAboutActive] = useState(false)
   const [isDark, setIsDark] = useState(false)
+  const [hoveredLink, setHoveredLink] = useState(null)
+
+  const workLinkRef = useRef(null)
+  const aboutLinkRef = useRef(null)
+  const pillRef = useRef(null)
 
   // "work" activates when on case study pages or when scrolled past works section on home
   // "about" activates when on the about page
@@ -43,6 +49,39 @@ export default function Navbar() {
     window.addEventListener('scroll', onScroll, { passive: true })
     return () => window.removeEventListener('scroll', onScroll)
   }, [isHome])
+
+  // Animate pill to hovered or active link
+  useEffect(() => {
+    const pill = pillRef.current
+    if (!pill) return
+
+    let targetLink = null
+    if (hoveredLink === 'work') {
+      targetLink = workLinkRef.current
+    } else if (hoveredLink === 'about') {
+      targetLink = aboutLinkRef.current
+    } else if (worksActive) {
+      targetLink = workLinkRef.current
+    } else if (aboutActive) {
+      targetLink = aboutLinkRef.current
+    }
+
+    if (targetLink) {
+      const rect = targetLink.getBoundingClientRect()
+      const parentRect = targetLink.parentElement.getBoundingClientRect()
+      const x = rect.left - parentRect.left
+      const y = rect.top - parentRect.top
+
+      gsap.to(pill, {
+        x,
+        y,
+        width: rect.width,
+        height: rect.height,
+        duration: 0.35,
+        ease: 'power2.out',
+      })
+    }
+  }, [hoveredLink, worksActive, aboutActive])
 
   // Per-frame hit-test: check the background color behind nav links and determine
   // if white or black text is more legible based on luminance.
@@ -139,14 +178,26 @@ export default function Navbar() {
         </Link>
       )}
       <div className="navbar__links">
+        <div className="navbar__pill-container">
+          <div ref={pillRef} className="navbar__pill" />
+        </div>
         <Link
+          ref={workLinkRef}
           to="/#works"
           onClick={handleWork}
-          className={`navbar__link ${worksActive ? 'navbar__link--active' : ''}`}
+          className="navbar__link"
+          onMouseEnter={() => setHoveredLink('work')}
+          onMouseLeave={() => setHoveredLink(null)}
         >
           <span className="navbar__text">work</span>
         </Link>
-        <Link to="/about" className={`navbar__link ${aboutActive ? 'navbar__link--active' : ''}`}>
+        <Link
+          ref={aboutLinkRef}
+          to="/about"
+          className="navbar__link"
+          onMouseEnter={() => setHoveredLink('about')}
+          onMouseLeave={() => setHoveredLink(null)}
+        >
           <span className="navbar__text">about</span>
         </Link>
         <a href="mailto:sldang@usc.edu" className="navbar__cta">contact me</a>
