@@ -11,8 +11,8 @@ export default function Navbar() {
   const [aboutActive, setAboutActive] = useState(false)
   const [isDark, setIsDark] = useState(false)
 
-  // "work" activates only when the cursor dot visually arrives at it (on home page)
-  // or always on case study pages. "about" activates when on the about page.
+  // "work" activates when on case study pages or when scrolled past works section on home
+  // "about" activates when on the about page
   useEffect(() => {
     if (isCaseStudy) {
       setWorksActive(true)
@@ -24,10 +24,25 @@ export default function Navbar() {
       setWorksActive(false)
       setAboutActive(false)
     }
-    const onCursorAtNav = (e) => setWorksActive(e.detail.active)
-    window.addEventListener('cursor-at-nav', onCursorAtNav)
-    return () => window.removeEventListener('cursor-at-nav', onCursorAtNav)
   }, [pathname, isCaseStudy, isAbout])
+
+  // On home page: track scroll to highlight "work" when works section is in view
+  useEffect(() => {
+    if (!isHome) return
+
+    const onScroll = () => {
+      const worksSection = document.getElementById('works')
+      if (!worksSection) return
+
+      const rect = worksSection.getBoundingClientRect()
+      // Activate when works section top is above navbar (scrolled past it)
+      setWorksActive(rect.top < 100)
+    }
+
+    onScroll() // check on mount
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => window.removeEventListener('scroll', onScroll)
+  }, [isHome])
 
   // Per-frame hit-test: check the background color behind nav links and determine
   // if white or black text is more legible based on luminance.
