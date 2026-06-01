@@ -12,6 +12,8 @@ export default function Navbar() {
   const [aboutActive, setAboutActive] = useState(false)
   const [isDark, setIsDark] = useState(false)
   const [hoveredLink, setHoveredLink] = useState(null)
+  const [workTextDark, setWorkTextDark] = useState(true)
+  const [aboutTextDark, setAboutTextDark] = useState(true)
 
   const workLinkRef = useRef(null)
   const aboutLinkRef = useRef(null)
@@ -156,6 +158,33 @@ export default function Navbar() {
       const lum = getLuminance(bgColor.r, bgColor.g, bgColor.b)
       // If luminance is less than 0.5, background is dark, use white text
       setIsDark(lum < 0.5)
+
+      // Check background behind each individual link for non-highlighted text color
+      const checkLinkBackground = (link) => {
+        if (!link) return true // default to dark text
+        const linkRect = link.getBoundingClientRect()
+        const linkCx = linkRect.left + linkRect.width / 2
+        const linkCy = linkRect.top + linkRect.height / 2
+        const linkEls = document.elementsFromPoint(linkCx, linkCy)
+
+        let linkBgColor = { r: 255, g: 255, b: 255 }
+        for (let el of linkEls) {
+          if (el.closest('.navbar')) continue
+          if (el.tagName === 'VIDEO' || el.tagName === 'IMG') {
+            linkBgColor = { r: 0, g: 0, b: 0 }
+            break
+          }
+          linkBgColor = getBackgroundColor(el)
+          if (linkBgColor.r !== 255 || linkBgColor.g !== 255 || linkBgColor.b !== 255) {
+            break
+          }
+        }
+        const linkLum = getLuminance(linkBgColor.r, linkBgColor.g, linkBgColor.b)
+        return linkLum >= 0.5 // true if light background (use dark text)
+      }
+
+      setWorkTextDark(checkLinkBackground(workLinkRef.current))
+      setAboutTextDark(checkLinkBackground(aboutLinkRef.current))
     }
 
     const onScroll = () => {
@@ -203,7 +232,12 @@ export default function Navbar() {
           onMouseEnter={() => setHoveredLink('work')}
           onMouseLeave={() => setHoveredLink(null)}
         >
-          <span className="navbar__text">work</span>
+          <span
+            className="navbar__text"
+            style={!(hoveredLink === 'work' || (!hoveredLink && worksActive)) ? { color: workTextDark ? 'var(--black)' : '#ffffff' } : {}}
+          >
+            work
+          </span>
         </Link>
         <Link
           ref={aboutLinkRef}
@@ -212,7 +246,12 @@ export default function Navbar() {
           onMouseEnter={() => setHoveredLink('about')}
           onMouseLeave={() => setHoveredLink(null)}
         >
-          <span className="navbar__text">about</span>
+          <span
+            className="navbar__text"
+            style={!(hoveredLink === 'about' || (!hoveredLink && aboutActive)) ? { color: aboutTextDark ? 'var(--black)' : '#ffffff' } : {}}
+          >
+            about
+          </span>
         </Link>
         <a href="mailto:sldang@usc.edu" className="navbar__cta">contact me</a>
       </div>
