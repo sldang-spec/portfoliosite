@@ -5,38 +5,61 @@ import './ScrollAvatar.css'
 
 export default function ScrollAvatar() {
   const ref = useRef()
+  const animRef = useRef(null)
 
   useEffect(() => {
     const el = ref.current
+    if (!el) return
 
-    gsap.set(el, { xPercent: -50, yPercent: -50 })
+    const createAnimation = () => {
+      // Kill previous animation if exists
+      if (animRef.current) {
+        animRef.current.scrollTrigger?.kill()
+        animRef.current.kill()
+      }
 
-    const anim = gsap.to(el, {
-      width: 44,
-      height: 44,
-      top: 20,
-      left: '5vw',
-      xPercent: 0,
-      yPercent: 0,
-      ease: 'none',
-      scrollTrigger: {
-        trigger: '.hero',
-        start: 'top top',
-        end: 'bottom top',
-        scrub: 1.2,
-        onUpdate: (self) => {
-          if (self.progress > 0.9) {
-            el.classList.add('scroll-avatar--clickable')
-          } else {
-            el.classList.remove('scroll-avatar--clickable')
-          }
+      gsap.set(el, { xPercent: -50, yPercent: -50 })
+
+      const anim = gsap.to(el, {
+        width: 44,
+        height: 44,
+        top: 20,
+        left: '5vw',
+        xPercent: 0,
+        yPercent: 0,
+        ease: 'none',
+        scrollTrigger: {
+          trigger: '.hero',
+          start: 'top top',
+          end: 'bottom top',
+          scrub: 1.2,
+          onUpdate: (self) => {
+            if (self.progress > 0.9) {
+              el.classList.add('scroll-avatar--clickable')
+            } else {
+              el.classList.remove('scroll-avatar--clickable')
+            }
+          },
         },
-      },
-    })
+      })
+
+      animRef.current = anim
+    }
+
+    createAnimation()
+
+    const handleResize = () => {
+      ScrollTrigger.getAll().forEach(trigger => trigger.refresh())
+    }
+
+    window.addEventListener('resize', handleResize)
 
     return () => {
-      anim.scrollTrigger?.kill()
-      anim.kill()
+      window.removeEventListener('resize', handleResize)
+      if (animRef.current) {
+        animRef.current.scrollTrigger?.kill()
+        animRef.current.kill()
+      }
     }
   }, [])
 

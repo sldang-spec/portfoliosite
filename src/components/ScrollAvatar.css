@@ -7,6 +7,7 @@
   z-index: 50;
   pointer-events: none;
   perspective: 1200px;
+  will-change: width, height, top, left;
 }
 
 .scroll-avatar--clickable {
@@ -20,8 +21,27 @@
   object-fit: contain;
   transition: transform 0.4s cubic-bezier(0.23, 1, 0.320, 1);
   transform-style: preserve-3d;
+  backface-visibility: hidden;
 }
 
 .scroll-avatar--clickable:hover img {
   transform: rotateX(8deg) rotateY(-12deg) scale(1.08);
+}
+
+/* Mobile: hide avatar on very small screens */
+@media (max-width: 768px) {
+  .scroll-avatar {
+    width: min(280px, 30vw);
+    height: min(280px, 30vw);
+    left: 20vw;
+  }
+}
+
+@media (max-width: 480px) {
+  .scroll-avatar {
+    width: min(200px, 25vw);
+    height: min(200px, 25vw);
+    left: 15vw;
+    display: none;
+  }
 }
