@@ -104,6 +104,16 @@
 .now-playing__spotify-mark {
   opacity: 0.85;
   display: flex;
+  text-decoration: none;
+  cursor: pointer;
+  transition: opacity 0.2s ease, transform 0.15s ease;
+  border-radius: 50%;
+  padding: 6px;
+}
+
+.now-playing__spotify-mark:hover {
+  opacity: 1;
+  transform: scale(1.15);
 }
 
 /* Loading / empty states */

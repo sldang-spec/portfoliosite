@@ -108,9 +108,15 @@ export default function NowPlaying() {
           </svg>
         </button>
 
-        <div className="now-playing__spotify-mark">
+        <a
+          href="https://open.spotify.com/user/9fl2gqkr0ow86lzd70eo8zuzv?si=db34499ff7f84b53"
+          target="_blank"
+          rel="noreferrer"
+          className="now-playing__spotify-mark"
+          aria-label="Visit Spotify profile"
+        >
           <SpotifyIcon size={26} />
-        </div>
+        </a>
 
         <button className="now-playing__btn" onClick={next} aria-label="Next">
           <svg viewBox="0 0 24 24" fill="white" width="22" height="22">
