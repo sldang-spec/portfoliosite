@@ -4,7 +4,6 @@ import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
 import Navbar from './components/Navbar'
-import CustomCursor from './components/CustomCursor'
 import LoadingScreen from './components/LoadingScreen'
 import Home from './pages/Home'
 import Works from './pages/Works'
@@ -41,7 +40,6 @@ export default function App() {
     <BrowserRouter>
       <LoadingScreen />
       <ScrollToTop />
-      <CustomCursor />
       <Navbar />
       <Routes>
         <Route path="/" element={<Home />} />
