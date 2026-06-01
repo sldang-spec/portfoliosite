@@ -46,7 +46,8 @@
   position: absolute;
   background: var(--blue);
   border-radius: 100px;
-  will-change: transform, width, height;
+  will-change: transform, width, height, opacity;
+  opacity: 0;
 }
 
 .navbar__link {

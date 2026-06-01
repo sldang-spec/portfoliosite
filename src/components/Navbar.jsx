@@ -17,6 +17,14 @@ export default function Navbar() {
   const aboutLinkRef = useRef(null)
   const pillRef = useRef(null)
 
+  // Initialize pill on mount
+  useEffect(() => {
+    const pill = pillRef.current
+    if (pill) {
+      gsap.set(pill, { opacity: 0 })
+    }
+  }, [])
+
   // "work" activates when on case study pages or when scrolled past works section on home
   // "about" activates when on the about page
   useEffect(() => {
@@ -66,13 +74,17 @@ export default function Navbar() {
       targetLink = aboutLinkRef.current
     }
 
-    if (targetLink) {
+    // On home page: hide pill if no hover and not at works section
+    const shouldHidePill = isHome && !hoveredLink && !worksActive
+
+    if (targetLink && !shouldHidePill) {
       const rect = targetLink.getBoundingClientRect()
       const parentRect = targetLink.parentElement.getBoundingClientRect()
       const x = rect.left - parentRect.left
       const y = rect.top - parentRect.top
 
       gsap.to(pill, {
+        opacity: 1,
         x,
         y,
         width: rect.width,
@@ -80,8 +92,10 @@ export default function Navbar() {
         duration: 0.35,
         ease: 'power2.out',
       })
+    } else if (shouldHidePill) {
+      gsap.to(pill, { opacity: 0, duration: 0.35, ease: 'power2.out' })
     }
-  }, [hoveredLink, worksActive, aboutActive])
+  }, [hoveredLink, worksActive, aboutActive, isHome])
 
   // Per-frame hit-test: check the background color behind nav links and determine
   // if white or black text is more legible based on luminance.
