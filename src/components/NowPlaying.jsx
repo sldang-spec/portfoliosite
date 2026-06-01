@@ -55,21 +55,35 @@ export default function NowPlaying() {
           if (data.access_token) {
             const player = new window.Spotify.Player({
               name: 'Portfolio Player',
-              getOAuthToken: cb => cb(data.access_token),
+              getOAuthToken: cb => {
+                console.log('Getting OAuth token...')
+                cb(data.access_token)
+              },
               volume: 0.5,
             })
 
             player.addListener('player_ready', ({ device_id }) => {
+              console.log('Player ready with device:', device_id)
               deviceIdRef.current = device_id
             })
 
             player.addListener('player_state_changed', (state) => {
+              console.log('Player state changed:', state)
               if (state) {
                 setIsPlaying(!state.paused)
               }
             })
 
+            player.addListener('authentication_error', ({ message }) => {
+              console.error('Authentication error:', message)
+            })
+
+            player.addListener('account_error', ({ message }) => {
+              console.error('Account error:', message)
+            })
+
             playerRef.current = player
+            console.log('Connecting player...')
             player.connect()
           }
         })
@@ -102,13 +116,24 @@ export default function NowPlaying() {
         method: 'PUT',
         headers: { 'Authorization': `Bearer ${accessToken}`, 'Content-Type': 'application/json' },
         body: JSON.stringify({ uris: [track.uri] }),
-      }).catch(() => {})
+      }).then(r => {
+        console.log('Play response:', r.status)
+      }).catch(err => {
+        console.error('Play error:', err)
+      })
+    } else {
+      console.log('Cannot play - player:', !!playerRef.current, 'device:', deviceIdRef.current, 'track uri:', track?.uri)
     }
   }
 
   const togglePlayPause = () => {
+    console.log('Toggle play/pause - player ready:', !!playerRef.current)
     if (playerRef.current) {
-      playerRef.current.togglePlay()
+      playerRef.current.togglePlay().then(() => {
+        console.log('Play/pause toggled')
+      }).catch(err => {
+        console.error('Play/pause error:', err)
+      })
     }
   }
 
