@@ -107,7 +107,7 @@ export default function About() {
 
               <a href="https://fastandfurious.fandom.com/wiki/Suki" target="_blank" rel="noreferrer" className="about__explore-btn">
                 <span>Explore More</span>
-                <img src="/img/about/suki.png" alt="" className="about__explore-btn-icon" />
+                <img src="/img/about/Suki.png" alt="" className="about__explore-btn-icon" />
               </a>
             </div>
 
