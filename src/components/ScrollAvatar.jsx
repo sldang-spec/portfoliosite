@@ -18,7 +18,23 @@ export default function ScrollAvatar() {
         animRef.current.kill()
       }
 
+      // Don't animate on mobile
+      const isMobile = window.innerWidth <= 768
+
       gsap.set(el, { xPercent: -50, yPercent: -50 })
+
+      if (isMobile) {
+        // On mobile, just set fixed position without scroll animation
+        gsap.set(el, {
+          width: 'auto',
+          height: 'auto',
+          top: 'auto',
+          left: '50%',
+          xPercent: -50,
+          yPercent: -50,
+        })
+        return
+      }
 
       const anim = gsap.to(el, {
         width: 44,
@@ -49,7 +65,8 @@ export default function ScrollAvatar() {
     createAnimation()
 
     const handleResize = () => {
-      ScrollTrigger.getAll().forEach(trigger => trigger.refresh())
+      // Recreate animation on resize with new viewport
+      createAnimation()
     }
 
     window.addEventListener('resize', handleResize)
