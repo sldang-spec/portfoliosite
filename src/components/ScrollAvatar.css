@@ -28,20 +28,22 @@
   transform: rotateX(8deg) rotateY(-12deg) scale(1.08);
 }
 
-/* Mobile: hide avatar on very small screens */
+/* Mobile: adjust avatar for smaller screens */
 @media (max-width: 768px) {
   .scroll-avatar {
     width: min(280px, 30vw);
     height: min(280px, 30vw);
-    left: 20vw;
+    left: 50%;
+    top: 15vh;
   }
 }
 
 @media (max-width: 480px) {
   .scroll-avatar {
-    width: min(200px, 25vw);
-    height: min(200px, 25vw);
-    left: 15vw;
-    display: none;
+    width: min(240px, 40vw);
+    height: min(240px, 40vw);
+    left: 50%;
+    top: 8vh;
+    z-index: 40;
   }
 }
