@@ -7,7 +7,7 @@ export default function LoadingScreen() {
   const [isFadingOut, setIsFadingOut] = useState(false)
 
   useEffect(() => {
-    const MIN_LOAD_TIME = 3000 // 3 seconds for gif to play fully
+    const MIN_LOAD_TIME = 1500 // 1.5 seconds for gif to play
     let startTime = Date.now()
     let pageHasLoaded = false
 
