@@ -1,0 +1,37 @@
+/* XRMural Case Study Layout */
+.xrmural__layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+  align-items: start;
+}
+
+.xrmural__left {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.xrmural__right {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  align-items: center;
+}
+
+.xrmural__video-horizontal {
+  width: 100%;
+  border-radius: 16px;
+  object-fit: cover;
+  display: block;
+  aspect-ratio: 16 / 9;
+}
+
+.xrmural__video-vertical {
+  width: 100%;
+  max-width: 300px;
+  border-radius: 16px;
+  object-fit: cover;
+  display: block;
+  aspect-ratio: 9 / 16;
+}

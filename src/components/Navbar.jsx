@@ -1,0 +1,141 @@
+import { useState, useEffect } from 'react'
+import { Link, useLocation } from 'react-router-dom'
+import './Navbar.css'
+
+export default function Navbar() {
+  const { pathname } = useLocation()
+  const isHome = pathname === '/'
+  const isAbout = pathname === '/about'
+  const isCaseStudy = pathname.startsWith('/work/')
+  const [worksActive, setWorksActive] = useState(false)
+  const [aboutActive, setAboutActive] = useState(false)
+  const [isDark, setIsDark] = useState(false)
+
+  // "work" activates only when the cursor dot visually arrives at it (on home page)
+  // or always on case study pages. "about" activates when on the about page.
+  useEffect(() => {
+    if (isCaseStudy) {
+      setWorksActive(true)
+      setAboutActive(false)
+    } else if (isAbout) {
+      setAboutActive(true)
+      setWorksActive(false)
+    } else {
+      setWorksActive(false)
+      setAboutActive(false)
+    }
+    const onCursorAtNav = (e) => setWorksActive(e.detail.active)
+    window.addEventListener('cursor-at-nav', onCursorAtNav)
+    return () => window.removeEventListener('cursor-at-nav', onCursorAtNav)
+  }, [pathname, isCaseStudy, isAbout])
+
+  // Per-frame hit-test: check the background color behind nav links and determine
+  // if white or black text is more legible based on luminance.
+  useEffect(() => {
+    let raf = null
+
+    const getLuminance = (r, g, b) => {
+      // Calculate relative luminance per WCAG
+      const [rs, gs, bs] = [r, g, b].map(x => {
+        x = x / 255
+        return x <= 0.03928 ? x / 12.92 : Math.pow((x + 0.055) / 1.055, 2.4)
+      })
+      return 0.2126 * rs + 0.7152 * gs + 0.0722 * bs
+    }
+
+    const getBackgroundColor = (element) => {
+      let el = element
+      while (el) {
+        const style = window.getComputedStyle(el)
+        const bgColor = style.backgroundColor
+        if (bgColor && bgColor !== 'rgba(0, 0, 0, 0)' && bgColor !== 'transparent') {
+          const match = bgColor.match(/\d+/g)
+          if (match && match.length >= 3) {
+            return { r: parseInt(match[0]), g: parseInt(match[1]), b: parseInt(match[2]) }
+          }
+        }
+        el = el.parentElement
+      }
+      return { r: 255, g: 255, b: 255 } // default to white
+    }
+
+    const check = () => {
+      const navBar = document.querySelector('.navbar')
+      if (!navBar) { setIsDark(false); return }
+
+      const rect = navBar.getBoundingClientRect()
+      const cx = rect.left + rect.width / 2
+      const cy = rect.top + rect.height / 2
+      const els = document.elementsFromPoint(cx, cy)
+
+      // Find the background element (skip navbar itself)
+      let bgColor = { r: 255, g: 255, b: 255 }
+      for (let el of els) {
+        if (el.closest('.navbar')) continue
+
+        // Check if element is a video or image (likely dark)
+        if (el.tagName === 'VIDEO' || el.tagName === 'IMG') {
+          bgColor = { r: 0, g: 0, b: 0 } // Videos/images are usually dark
+          break
+        }
+
+        bgColor = getBackgroundColor(el)
+        if (bgColor.r !== 255 || bgColor.g !== 255 || bgColor.b !== 255) {
+          break
+        }
+      }
+
+      const lum = getLuminance(bgColor.r, bgColor.g, bgColor.b)
+      // If luminance is less than 0.5, background is dark, use white text
+      setIsDark(lum < 0.5)
+    }
+
+    const onScroll = () => {
+      if (raf) cancelAnimationFrame(raf)
+      raf = requestAnimationFrame(check)
+    }
+
+    check()  // run once on mount / route change
+    window.addEventListener('scroll', onScroll, { passive: true })
+    window.addEventListener('resize', check)
+    return () => {
+      window.removeEventListener('scroll', onScroll)
+      window.removeEventListener('resize', check)
+      if (raf) cancelAnimationFrame(raf)
+    }
+  }, [pathname])
+
+  function handleWork(e) {
+    if (isHome) {
+      e.preventDefault()
+      document.getElementById('works')?.scrollIntoView({ behavior: 'smooth' })
+    }
+  }
+
+  // Apply dark-bg class for accessibility — "about" link changes color based on background
+  // Only prevent it when "work" is active (which needs to always be white)
+  const shouldApplyDarkBg = isDark && !worksActive
+
+  return (
+    <nav className={`navbar ${isHome ? 'navbar--home' : 'navbar--inner'} ${shouldApplyDarkBg ? 'navbar--dark-bg' : ''}`}>
+      {!isHome && (
+        <Link to="/" className="navbar__logo">
+          <img src="/img/avatar.png" alt="Steven" />
+        </Link>
+      )}
+      <div className="navbar__links">
+        <Link
+          to="/#works"
+          onClick={handleWork}
+          className={`navbar__link ${worksActive ? 'navbar__link--active' : ''}`}
+        >
+          <span className="navbar__text">work</span>
+        </Link>
+        <Link to="/about" className={`navbar__link ${aboutActive ? 'navbar__link--active' : ''}`}>
+          <span className="navbar__text">about</span>
+        </Link>
+        <a href="mailto:sldang@usc.edu" className="navbar__cta">contact me</a>
+      </div>
+    </nav>
+  )
+}

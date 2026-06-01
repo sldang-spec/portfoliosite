@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm install *)",
+      "Bash(npm run *)",
+      "WebFetch(domain:williamle.design)",
+      "Bash(curl -s \"https://williamle.design/\")"
+    ]
+  }
+}

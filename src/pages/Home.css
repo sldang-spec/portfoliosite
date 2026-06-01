@@ -1,0 +1,272 @@
+/* ─────────────────────────────────────────
+   Hero
+───────────────────────────────────────── */
+.hero {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  min-height: 100vh;
+  padding: 0 var(--page-padding);
+  background: var(--white);
+}
+
+.hero__text {
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding-left: 40px;
+}
+
+.hero__heading {
+  font-family: var(--font-serif);
+  font-size: clamp(44px, 5.5vw, 76px);
+  font-weight: 400;
+  line-height: 1.08;
+  letter-spacing: -0.01em;
+  margin-bottom: 22px;
+}
+
+.hero__sub {
+  font-family: var(--font-sans);
+  font-size: clamp(16px, 1.35vw, 19px);
+  font-weight: 400;
+  line-height: 1.65;
+  max-width: 480px;
+  color: #222;
+}
+
+.hero__sub strong { font-weight: 600; }
+
+/* ─────────────────────────────────────────
+   Works – white section
+───────────────────────────────────────── */
+.home-works {
+  background: var(--white);
+}
+
+.home-works__inner {
+  padding: 80px var(--page-padding) 60px;
+  display: flex;
+  flex-direction: column;
+  gap: 96px;
+}
+
+.home-works__section-label {
+  font-family: var(--font-sans);
+  font-size: clamp(18px, 1.8vw, 26px);
+  font-weight: 400;
+  color: var(--black);
+  text-align: center;
+  margin-bottom: 24px;
+  letter-spacing: -0.01em;
+}
+
+/* ─────────────────────────────────────────
+   Full-width stacked cards
+───────────────────────────────────────── */
+.home-works__stack {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  /* Pull each side in so cards occupy ~68% of the viewport */
+  padding: 0 9vw;
+}
+
+.wcard__link { display: block; }
+
+.wcard {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.08);
+}
+
+.wcard__img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+  transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.wcard__link:hover .wcard__img { transform: scale(1.03); }
+
+/* Gradient overlays for text legibility */
+.wcard--light::before,
+.wcard--dark::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.wcard--light::before {
+  background:
+    linear-gradient(to bottom, rgba(0,0,0,0.5) 0%, transparent 30%),
+    linear-gradient(to top,    rgba(0,0,0,0.5) 0%, transparent 30%);
+}
+
+.wcard--dark::before {
+  background:
+    linear-gradient(to bottom, rgba(0,0,0,0.08) 0%, transparent 30%),
+    linear-gradient(to top,    rgba(0,0,0,0.08) 0%, transparent 30%);
+}
+
+/* ── Card header ── */
+.wcard__top {
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 20px;
+}
+
+.wcard__num {
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+}
+
+.wcard--light .wcard__num { color: rgba(255, 255, 255, 0.9); }
+.wcard--dark  .wcard__num { color: rgba(0, 0, 0, 0.65); }
+
+/* ── Badge ── */
+.wcard__badge {
+  width: 38px;
+  height: 38px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px;
+}
+
+.wcard__badge--round { border-radius: 50%; }
+
+/* Wide variant for landscape logos like Nike wordmark */
+.wcard__badge--wide {
+  width: 84px;
+  height: 40px;
+  padding: 4px 0;
+}
+
+.wcard__badge img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.wcard__badge-text {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  color: rgba(255, 255, 255, 0.85);
+  text-transform: uppercase;
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  padding: 6px 10px;
+  border-radius: 6px;
+}
+
+/* ── Card footer ── */
+.wcard__bottom {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  z-index: 2;
+  padding: 0 20px 18px;
+}
+
+.wcard__role { font-size: 12px; font-weight: 400; }
+.wcard--light .wcard__role { color: rgba(255, 255, 255, 0.7); }
+.wcard--dark  .wcard__role { color: rgba(0, 0, 0, 0.5); }
+
+/* ─────────────────────────────────────────
+   Misc – asymmetric 2-col grid
+───────────────────────────────────────── */
+.misc-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  align-items: start;
+  padding: 0 9vw;
+}
+
+.misc-col {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.misc-card {
+  position: relative;
+  border-radius: 14px;
+  overflow: hidden;
+  background: #111;
+}
+
+.misc-card__media {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.misc-card__overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(0,0,0,0.7) 0%, transparent 50%);
+  pointer-events: none;
+}
+
+.misc-card__info {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  z-index: 2;
+  padding: 0 14px 16px;
+  text-align: center;
+}
+
+.misc-card__sound {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 3;
+  font-size: 18px;
+  line-height: 1;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+}
+
+.misc-card__title {
+  font-size: 12px;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.9);
+  line-height: 1.4;
+}
+
+.misc-card__role {
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.55);
+  margin-top: 2px;
+}
+
+/* Size variants */
+.misc-card--small  { aspect-ratio: 4 / 3; }
+.misc-card--large  { aspect-ratio: 1 / 1; }
+.misc-card--tall   { aspect-ratio: 3 / 4; }
+.misc-card--medium { aspect-ratio: 1 / 1; }
+
+/* ─────────────────────────────────────────
+   Footer
+───────────────────────────────────────── */
+.home-works .footer {
+  border-top: 1px solid var(--light-gray);
+}
