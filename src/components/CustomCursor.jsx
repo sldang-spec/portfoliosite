@@ -29,7 +29,16 @@ export default function CustomCursor() {
     const isCaseStudy = pathname.startsWith('/work/')
     const shouldHide = isAbout || isCaseStudy
     document.body.classList.toggle('cursor-about', shouldHide)
-    gsap.to(circle, { opacity: shouldHide ? 0 : 1, duration: 0.25 })
+
+    // When returning to home page, reset cursor to initial state
+    if (pathname === '/') {
+      gsap.to(circle, { opacity: 1, width: 18, height: 18, borderRadius: '50%', duration: 0.25 })
+      // Refresh ScrollTrigger to recalculate positions
+      ScrollTrigger.refresh()
+    } else {
+      gsap.to(circle, { opacity: shouldHide ? 0 : 1, duration: 0.25 })
+    }
+
     return () => document.body.classList.remove('cursor-about')
   }, [pathname])
 
