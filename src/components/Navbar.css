@@ -68,7 +68,7 @@
 
 /* When pill is under link (hovered or active): white text */
 .navbar__link:hover .navbar__text,
-.navbar__link.has-pill .navbar__text {
+.navbar__link--has-pill .navbar__text {
   color: #ffffff !important;
 }
 

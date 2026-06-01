@@ -185,7 +185,7 @@ export default function Navbar() {
           ref={workLinkRef}
           to="/#works"
           onClick={handleWork}
-          className="navbar__link"
+          className={`navbar__link ${hoveredLink === 'work' || (!hoveredLink && worksActive) ? 'navbar__link--has-pill' : ''}`}
           onMouseEnter={() => setHoveredLink('work')}
           onMouseLeave={() => setHoveredLink(null)}
         >
@@ -194,7 +194,7 @@ export default function Navbar() {
         <Link
           ref={aboutLinkRef}
           to="/about"
-          className="navbar__link"
+          className={`navbar__link ${hoveredLink === 'about' || (!hoveredLink && aboutActive) ? 'navbar__link--has-pill' : ''}`}
           onMouseEnter={() => setHoveredLink('about')}
           onMouseLeave={() => setHoveredLink(null)}
         >
