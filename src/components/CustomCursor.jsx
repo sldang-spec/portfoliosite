@@ -104,11 +104,11 @@ export default function CustomCursor() {
       } else if (!inScrollMode && !isCaseStudy) {
         if (isHovering && hoveredEl) {
           const rect = hoveredEl.getBoundingClientRect()
-          cx += (rect.left + rect.width  / 2 - cx) * 0.18
-          cy += (rect.top  + rect.height / 2 - cy) * 0.18
+          cx += (rect.left + rect.width  / 2 - cx) * 0.22
+          cy += (rect.top  + rect.height / 2 - cy) * 0.22
         } else {
-          cx += (mouseX - cx) * 0.1
-          cy += (mouseY - cy) * 0.1
+          cx += (mouseX - cx) * 0.2
+          cy += (mouseY - cy) * 0.2
         }
       } else if (!inScrollMode && isCaseStudy && isHovering && hoveredEl) {
         // On case study pages, only move cursor when hovering over nav links
