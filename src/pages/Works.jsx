@@ -4,11 +4,11 @@ import './Works.css'
 
 const sections = [
   {
-    title: 'Extended Reality Works',
+    title: 'Selected XR Work',
     projects: [
       {
         id: 'xr-mural',
-        title: 'XR Mural',
+        title: '01 | AR Mural',
         subtitle: 'Augmented Reality Installation',
         thumb: '/img/homecase/xrmural.webp',
         path: '/work/xr-mural',
@@ -16,20 +16,28 @@ const sections = [
       },
       {
         id: 'clash-xr',
-        title: 'Clash XR',
+        title: '02 | ClashXR',
         subtitle: 'Extended Reality Survival Game',
         thumb: '/img/homecase/clashxr copy.webp',
         path: '/work/clash-xr',
         tags: ['XR', 'Game Design', 'UI'],
       },
+      {
+        id: 'snap-gtm',
+        title: '03 | Snapchat x Nintendo GTM Strategy',
+        subtitle: 'Go-To-Market Strategy',
+        thumb: '/img/snap/snap-cover.webp',
+        path: '/work/snap-gtm',
+        tags: ['Strategy', 'Marketing', 'UX'],
+      },
     ],
   },
   {
-    title: 'Social Branding Work',
+    title: 'Selected Branding Work',
     projects: [
       {
         id: 'nike-fc',
-        title: 'Nike FC / EA FC',
+        title: '01 | Nike Community Engagement',
         subtitle: 'Social Branding Work',
         thumb: '/img/eafc/eafchero.webp',
         path: '/work/nike-fc',
@@ -37,24 +45,11 @@ const sections = [
       },
       {
         id: 'did',
-        title: 'Descent Into Darkness',
+        title: '02 | Dreamscape Branding Campaign',
         subtitle: 'Social Branding Work',
         thumb: '/img/did/did1.webp',
         path: '/work/did',
         tags: ['Branding', 'Campaign', 'Poster'],
-      },
-    ],
-  },
-  {
-    title: 'Miscellaneous Work',
-    projects: [
-      {
-        id: 'snap-gtm',
-        title: 'Snap Spectacles GTM',
-        subtitle: 'Go-To-Market Strategy',
-        thumb: '/img/snap/snap-cover.webp',
-        path: '/work/snap-gtm',
-        tags: ['Strategy', 'Marketing', 'UX'],
       },
     ],
   },
@@ -63,6 +58,10 @@ const sections = [
 export default function Works() {
   return (
     <div className="works">
+      <div className="works__avatar">
+        <img src="/img/avatar.png" alt="Steven" />
+      </div>
+
       <div className="works__content">
         {sections.map((section) => (
           <section key={section.title} className="works__section">
