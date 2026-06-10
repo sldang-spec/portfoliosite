@@ -44,10 +44,10 @@ export default function ScrollAvatar() {
       const anim = gsap.to(el, {
         width: 'clamp(80px, 12vw, 200px)',
         height: 'clamp(80px, 12vw, 200px)',
-        top: '30vh',
-        left: '50%',
-        xPercent: -50,
-        yPercent: -50,
+        top: '100px',
+        left: '20px',
+        xPercent: 0,
+        yPercent: 0,
         ease: 'none',
         scrollTrigger: {
           trigger: '.hero',
