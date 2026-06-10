@@ -44,8 +44,8 @@ export default function ScrollAvatar() {
       const anim = gsap.to(el, {
         width: '40px',
         height: '40px',
-        top: '20px',
-        left: '20px',
+        top: '26px',
+        left: '28px',
         xPercent: 0,
         yPercent: 0,
         ease: 'none',
@@ -53,7 +53,8 @@ export default function ScrollAvatar() {
           trigger: '.hero',
           start: 'top top',
           end: 'bottom top',
-          scrub: 1.2,
+          scrub: 0.5,
+          invalidateOnRefresh: true,
           onUpdate: (self) => {
             if (self.progress > 0.9) {
               el.classList.add('scroll-avatar--clickable')
