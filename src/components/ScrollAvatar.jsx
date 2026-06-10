@@ -25,18 +25,19 @@ export default function ScrollAvatar() {
       // Don't animate on mobile
       const isMobile = window.innerWidth <= 768
 
-      gsap.set(el, { xPercent: -50, yPercent: -50 })
+      // Reset to original position before creating new animation
+      gsap.set(el, {
+        width: 'clamp(180px, 40vw, 380px)',
+        height: 'clamp(180px, 40vw, 380px)',
+        top: '50vh',
+        left: '25vw',
+        xPercent: -50,
+        yPercent: -50,
+        clearProps: 'none'
+      })
 
       if (isMobile) {
-        // On mobile, just set fixed position without scroll animation
-        gsap.set(el, {
-          width: 'auto',
-          height: 'auto',
-          top: 'auto',
-          left: '50%',
-          xPercent: -50,
-          yPercent: -50,
-        })
+        // On mobile, hide the avatar (CSS handles display: none)
         return
       }
 
