@@ -3,49 +3,20 @@
 ───────────────────────────────────────── */
 .hero {
   display: flex;
-  flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-end;
   min-height: 100vh;
-  padding: clamp(100px, 15vh, 150px) var(--page-padding) 40px;
+  padding: 0 var(--page-padding);
   background: var(--white);
-  gap: clamp(32px, 6vw, 60px);
-}
-
-.hero__avatar-container {
-  position: relative;
-  width: clamp(240px, 50vw, 480px);
-  aspect-ratio: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.hero__blob {
-  position: absolute;
-  width: clamp(160px, 35vw, 320px);
-  height: clamp(160px, 35vw, 320px);
-  background: var(--blue);
-  border-radius: 50%;
-  left: clamp(-40px, -8vw, -80px);
-  opacity: 0.8;
-  z-index: 0;
-}
-
-.hero__avatar {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-  z-index: 1;
 }
 
 .hero__text {
+  width: 50%;
   display: flex;
   flex-direction: column;
   align-items: center;
   text-align: center;
-  max-width: 600px;
+  padding-left: 40px;
 }
 
 .hero__heading {
@@ -62,6 +33,7 @@
   font-size: clamp(16px, 1.35vw, 19px);
   font-weight: 400;
   line-height: 1.65;
+  max-width: 480px;
   color: #222;
 }
 
@@ -303,12 +275,22 @@
    Responsive Design
 ───────────────────────────────────────── */
 @media (max-width: 1024px) {
+  .hero__text {
+    width: 100%;
+    padding-left: 0;
+  }
+
   .home-works__stack {
     padding: 0 6vw;
   }
 }
 
 @media (max-width: 768px) {
+  .hero {
+    justify-content: center;
+    min-height: 80vh;
+  }
+
   .hero__heading {
     font-size: clamp(32px, 4vw, 56px);
     margin-bottom: 16px;
@@ -340,6 +322,19 @@
 }
 
 @media (max-width: 480px) {
+  .hero {
+    min-height: 100vh;
+    padding: 500px var(--page-padding) 40px;
+    justify-content: flex-start;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .hero__text {
+    width: 100%;
+    padding-left: 0;
+  }
+
   .hero__heading {
     font-size: clamp(22px, 3vw, 36px);
     margin-bottom: 12px;
@@ -347,6 +342,7 @@
 
   .hero__sub {
     font-size: clamp(13px, 1.1vw, 15px);
+    max-width: 100%;
   }
 
   .home-works__inner {

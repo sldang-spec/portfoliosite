@@ -205,10 +205,6 @@ export default function Home() {
 
       {/* ── Hero ── */}
       <section className="hero">
-        <div className="hero__avatar-container">
-          <div className="hero__blob" />
-          <img src="/img/avatar.png" alt="Steven" className="hero__avatar" />
-        </div>
         <div className="hero__text">
           <h1 className="hero__heading">Hi, I'm Steven!</h1>
           <p className="hero__sub">
