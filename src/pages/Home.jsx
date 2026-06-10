@@ -217,8 +217,10 @@ export default function Home() {
       {/* ── Mobile Hero (shown only on mobile) ── */}
       <section className="hero-mobile">
         <div className="hero-mobile__container">
+          <div className="hero-mobile__blob" />
           <img src="/img/avatar.png" alt="Steven" className="hero-mobile__avatar" />
         </div>
+        <h1 className="hero-mobile__heading">Hi, I'm Steven!</h1>
         <p className="hero-mobile__sub">
           A designer creating <strong>physical</strong> and <strong>digital</strong> experiences
           at USC's Iovine and Young Academy and Snap Inc.
