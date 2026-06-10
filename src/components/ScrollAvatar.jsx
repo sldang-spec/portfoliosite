@@ -76,6 +76,8 @@ export default function ScrollAvatar() {
     const handleResize = () => {
       // Recreate animation on resize with new viewport
       createAnimation()
+      // Refresh ScrollTrigger to recalculate positions
+      ScrollTrigger.refresh()
     }
 
     window.addEventListener('resize', handleResize)
