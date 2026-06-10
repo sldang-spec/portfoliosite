@@ -43,7 +43,7 @@
     width: min(320px, 80vw);
     height: min(320px, 80vw);
     left: 50%;
-    top: 12vh;
+    top: 90px;
     z-index: 40;
   }
 }
