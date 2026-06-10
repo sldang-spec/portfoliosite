@@ -42,9 +42,9 @@ export default function ScrollAvatar() {
       }
 
       const anim = gsap.to(el, {
-        width: 'clamp(80px, 12vw, 200px)',
-        height: 'clamp(80px, 12vw, 200px)',
-        top: '100px',
+        width: 'clamp(60px, 10vw, 140px)',
+        height: 'clamp(60px, 10vw, 140px)',
+        top: '20px',
         left: '20px',
         xPercent: 0,
         yPercent: 0,
