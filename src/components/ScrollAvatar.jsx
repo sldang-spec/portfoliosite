@@ -41,29 +41,39 @@ export default function ScrollAvatar() {
         return
       }
 
-      const anim = gsap.to(el, {
-        width: '40px',
-        height: '40px',
-        top: '26px',
-        left: '28px',
-        xPercent: 0,
-        yPercent: 0,
-        ease: 'none',
-        scrollTrigger: {
-          trigger: '.hero',
-          start: 'top top',
-          end: 'bottom top',
-          scrub: true,
-          invalidateOnRefresh: true,
-          onUpdate: (self) => {
-            if (self.progress > 0.9) {
-              el.classList.add('scroll-avatar--clickable')
-            } else {
-              el.classList.remove('scroll-avatar--clickable')
-            }
-          },
+      const anim = gsap.fromTo(el,
+        {
+          width: 'clamp(180px, 40vw, 380px)',
+          height: 'clamp(180px, 40vw, 380px)',
+          top: '50vh',
+          left: '25vw',
+          xPercent: -50,
+          yPercent: -50,
         },
-      })
+        {
+          width: '40px',
+          height: '40px',
+          top: '26px',
+          left: '28px',
+          xPercent: 0,
+          yPercent: 0,
+          ease: 'none',
+          scrollTrigger: {
+            trigger: '.hero',
+            start: 'center center',
+            end: 'bottom top',
+            scrub: 1,
+            invalidateOnRefresh: true,
+            onUpdate: (self) => {
+              if (self.progress > 0.9) {
+                el.classList.add('scroll-avatar--clickable')
+              } else {
+                el.classList.remove('scroll-avatar--clickable')
+              }
+            },
+          },
+        }
+      )
 
       animRef.current = anim
     }
