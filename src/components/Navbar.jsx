@@ -221,27 +221,38 @@ export default function Navbar() {
         </Link>
       )}
       <div className="navbar__links">
-        <div className="navbar__nav-pill">
-          <Link
-            ref={workLinkRef}
-            to="/#works"
-            onClick={handleWork}
-            className="navbar__nav-link"
-            onMouseEnter={() => setHoveredLink('work')}
-            onMouseLeave={() => setHoveredLink(null)}
+        <div className="navbar__pill-container">
+          <div ref={pillRef} className="navbar__pill" />
+        </div>
+        <Link
+          ref={workLinkRef}
+          to="/#works"
+          onClick={handleWork}
+          className={`navbar__link ${hoveredLink === 'work' || (!hoveredLink && worksActive) ? 'navbar__link--has-pill' : ''}`}
+          onMouseEnter={() => setHoveredLink('work')}
+          onMouseLeave={() => setHoveredLink(null)}
+        >
+          <span
+            className="navbar__text"
+            style={!(hoveredLink === 'work' || (!hoveredLink && worksActive)) ? { color: workTextDark ? 'var(--black)' : '#ffffff' } : {}}
           >
             work
-          </Link>
-          <Link
-            ref={aboutLinkRef}
-            to="/about"
-            className="navbar__nav-link"
-            onMouseEnter={() => setHoveredLink('about')}
-            onMouseLeave={() => setHoveredLink(null)}
+          </span>
+        </Link>
+        <Link
+          ref={aboutLinkRef}
+          to="/about"
+          className={`navbar__link ${hoveredLink === 'about' || (!hoveredLink && aboutActive) ? 'navbar__link--has-pill' : ''}`}
+          onMouseEnter={() => setHoveredLink('about')}
+          onMouseLeave={() => setHoveredLink(null)}
+        >
+          <span
+            className="navbar__text"
+            style={!(hoveredLink === 'about' || (!hoveredLink && aboutActive)) ? { color: aboutTextDark ? 'var(--black)' : '#ffffff' } : {}}
           >
             about
-          </Link>
-        </div>
+          </span>
+        </Link>
         <a href="mailto:sldang@usc.edu" className="navbar__cta">contact me</a>
       </div>
     </nav>
