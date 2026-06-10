@@ -55,13 +55,6 @@ export default function ScrollAvatar() {
           end: 'bottom top',
           scrub: true,
           invalidateOnRefresh: true,
-          onUpdate: (self) => {
-            if (self.progress > 0.9) {
-              el.classList.add('scroll-avatar--clickable')
-            } else {
-              el.classList.remove('scroll-avatar--clickable')
-            }
-          },
         },
       })
 
@@ -70,21 +63,31 @@ export default function ScrollAvatar() {
 
     createAnimation()
 
-    // On non-home pages, always make avatar clickable
     if (!isHome) {
       el.classList.add('scroll-avatar--clickable')
     }
 
+    const handleScroll = () => {
+      if (!isHome) return
+      if (window.scrollY > 50) {
+        el.classList.add('scroll-avatar--clickable')
+      } else {
+        el.classList.remove('scroll-avatar--clickable')
+      }
+    }
+
+    handleScroll()
+    window.addEventListener('scroll', handleScroll, { passive: true })
+
     const handleResize = () => {
-      // Recreate animation on resize with new viewport
       createAnimation()
-      // Refresh ScrollTrigger to recalculate positions
       ScrollTrigger.refresh()
     }
 
     window.addEventListener('resize', handleResize)
 
     return () => {
+      window.removeEventListener('scroll', handleScroll)
       window.removeEventListener('resize', handleResize)
       if (animRef.current) {
         animRef.current.scrollTrigger?.kill()
