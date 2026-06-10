@@ -25,55 +25,45 @@ export default function ScrollAvatar() {
       // Don't animate on mobile
       const isMobile = window.innerWidth <= 768
 
-      // Reset to original position before creating new animation
+      const startWidth = Math.min(380, Math.max(180, window.innerWidth * 0.4))
+      const startHeight = startWidth
+
       gsap.set(el, {
-        width: 'clamp(180px, 40vw, 380px)',
-        height: 'clamp(180px, 40vw, 380px)',
+        width: startWidth,
+        height: startHeight,
         top: '50vh',
         left: '25vw',
         xPercent: -50,
         yPercent: -50,
-        clearProps: 'none'
       })
 
       if (isMobile) {
-        // On mobile, hide the avatar (CSS handles display: none)
         return
       }
 
-      const anim = gsap.fromTo(el,
-        {
-          width: 'clamp(180px, 40vw, 380px)',
-          height: 'clamp(180px, 40vw, 380px)',
-          top: '50vh',
-          left: '25vw',
-          xPercent: -50,
-          yPercent: -50,
-        },
-        {
-          width: '40px',
-          height: '40px',
-          top: '26px',
-          left: '28px',
-          xPercent: 0,
-          yPercent: 0,
-          ease: 'none',
-          scrollTrigger: {
-            trigger: '.hero',
-            start: 'center center',
-            end: 'bottom top',
-            scrub: 1,
-            invalidateOnRefresh: true,
-            onUpdate: (self) => {
-              if (self.progress > 0.9) {
-                el.classList.add('scroll-avatar--clickable')
-              } else {
-                el.classList.remove('scroll-avatar--clickable')
-              }
-            },
+      const anim = gsap.to(el, {
+        width: 40,
+        height: 40,
+        top: 26,
+        left: 28,
+        xPercent: 0,
+        yPercent: 0,
+        ease: 'none',
+        scrollTrigger: {
+          trigger: '.hero',
+          start: 'top top',
+          end: 'bottom top',
+          scrub: true,
+          invalidateOnRefresh: true,
+          onUpdate: (self) => {
+            if (self.progress > 0.9) {
+              el.classList.add('scroll-avatar--clickable')
+            } else {
+              el.classList.remove('scroll-avatar--clickable')
+            }
           },
-        }
-      )
+        },
+      })
 
       animRef.current = anim
     }
