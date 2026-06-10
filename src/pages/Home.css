@@ -280,16 +280,16 @@
   align-items: center;
   justify-content: center;
   min-height: 100vh;
-  padding: 40px 20px;
+  padding: 110px 20px 60px;
   background: var(--white);
-  gap: 28px;
+  gap: 24px;
   text-align: center;
 }
 
 .hero-mobile__container {
   position: relative;
-  width: 280px;
-  height: 280px;
+  width: 240px;
+  height: 240px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -297,11 +297,11 @@
 
 .hero-mobile__blob {
   position: absolute;
-  width: 220px;
-  height: 220px;
+  width: 180px;
+  height: 180px;
   background: var(--blue);
   border-radius: 50%;
-  left: -50px;
+  left: -40px;
   opacity: 0.8;
   z-index: 0;
 }
@@ -316,23 +316,22 @@
 
 .hero-mobile__heading {
   font-family: var(--font-serif);
-  font-size: 40px;
+  font-size: 2rem;
   font-weight: 400;
   line-height: 1.1;
   letter-spacing: -0.01em;
-  margin: 0 0 16px 0;
+  margin: 0;
   color: var(--black);
 }
 
 .hero-mobile__sub {
   font-family: var(--font-sans);
-  font-size: 16px;
+  font-size: 1.2rem;
   font-weight: 400;
   line-height: 1.6;
   color: #222;
   max-width: 100%;
   margin: 0;
-  padding: 0 16px;
 }
 
 .hero-mobile__sub strong {
@@ -341,11 +340,11 @@
 
 .hero-mobile__cta {
   font-family: var(--font-sans);
-  font-size: 16px;
-  font-weight: 700;
-  line-height: 1.5;
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: 1.4;
   color: var(--black);
-  margin: 16px 0 0 0;
+  margin-top: 20px;
 }
 
 /* ─────────────────────────────────────────
@@ -409,7 +408,6 @@
 
   .hero-mobile {
     display: flex;
-    padding-top: 120px;
   }
 
   .home-works {
