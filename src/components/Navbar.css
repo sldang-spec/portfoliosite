@@ -6,11 +6,12 @@
   z-index: 100000;
   display: flex;
   align-items: center;
-  padding: 0 var(--page-padding);
+  justify-content: space-between;
+  padding: 16px var(--page-padding);
   height: var(--nav-height);
 }
 
-.navbar--home  { justify-content: flex-end; }
+.navbar--home  { justify-content: space-between; }
 .navbar--inner { justify-content: space-between; }
 
 .navbar__logo img {
@@ -26,73 +27,50 @@
 }
 
 .navbar__links {
-  position: relative;
   display: flex;
   align-items: center;
-  gap: 40px;
-}
-
-/* Animated pill that sits behind the text */
-.navbar__pill-container {
-  position: absolute;
-  top: 0;
-  left: 0;
+  gap: 24px;
   width: 100%;
-  height: 100%;
-  pointer-events: none;
+  justify-content: space-between;
 }
 
-.navbar__pill {
-  position: absolute;
-  background: var(--blue);
+/* Dark pill container for work/about */
+.navbar__nav-pill {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  background: var(--black);
   border-radius: 100px;
-  will-change: transform, width, height, opacity;
-  opacity: 0;
+  padding: 8px 24px;
 }
 
-.navbar__link {
-  position: relative;
+.navbar__nav-link {
   font-family: var(--font-sans);
   font-size: 15px;
   font-weight: 400;
-  padding: 8px 18px;
+  color: var(--white);
+  padding: 8px 16px;
   border-radius: 100px;
-  z-index: 1;
-  transition: color 0.2s ease;
+  transition: background 0.2s ease, color 0.2s ease;
 }
 
-/* Default: dark text on white backgrounds */
-.navbar__text {
-  color: var(--black);
-  transition: color 0.2s ease;
+.navbar__nav-link:hover {
+  background: rgba(255, 255, 255, 0.15);
 }
 
-/* When pill is under link (hovered or active): white text */
-.navbar__link:hover .navbar__text,
-.navbar__link--has-pill .navbar__text {
-  color: #ffffff !important;
-}
-
-/* Dark card image is behind the nav — flip to white */
-.navbar--dark-bg .navbar__text {
-  color: #ffffff !important;
-}
-
-/* "contact me" pill — keeps its own dark style */
+/* "contact me" button — blue style */
 .navbar__cta {
-  position: relative;
-  z-index: 1;
   font-family: var(--font-sans);
   font-size: 15px;
   font-weight: 500;
   color: var(--white);
-  background: var(--black);
+  background: var(--blue);
   padding: 10px 24px;
   border-radius: 100px;
   transition: opacity 0.2s;
+  margin-left: auto;
 }
 
 .navbar__cta:hover {
-  background: var(--blue);
-  opacity: 1;
+  opacity: 0.85;
 }
