@@ -53,7 +53,7 @@ export default function ScrollAvatar() {
           trigger: '.hero',
           start: 'top top',
           end: 'bottom top',
-          scrub: 0.5,
+          scrub: true,
           invalidateOnRefresh: true,
           onUpdate: (self) => {
             if (self.progress > 0.9) {
