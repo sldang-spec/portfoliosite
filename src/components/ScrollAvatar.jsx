@@ -94,7 +94,11 @@ export default function ScrollAvatar() {
   }, [isHome])
 
   function handleClick() {
-    navigate('/')
+    if (isHome) {
+      window.scrollTo({ top: 0, behavior: 'smooth' })
+    } else {
+      navigate('/')
+    }
   }
 
   return (
