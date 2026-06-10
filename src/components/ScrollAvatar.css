@@ -40,10 +40,10 @@
 
 @media (max-width: 480px) {
   .scroll-avatar {
-    width: min(320px, 80vw);
-    height: min(320px, 80vw);
+    width: 85vw;
+    height: 85vw;
     left: 50%;
-    top: 90px;
+    top: 140px;
     z-index: 40;
   }
 }
