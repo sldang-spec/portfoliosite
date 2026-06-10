@@ -1,7 +1,7 @@
 .scroll-avatar {
   position: fixed;
-  width: min(380px, 35vw);
-  height: min(380px, 35vw);
+  width: clamp(180px, 40vw, 380px);
+  height: clamp(180px, 40vw, 380px);
   top: 50vh;
   left: 25vw;
   z-index: 50;
@@ -35,6 +35,12 @@
     height: min(280px, 30vw);
     left: 50%;
     top: 15vh;
+  }
+}
+
+@media (max-width: 768px) {
+  .scroll-avatar {
+    top: calc(50vh + 80px);
   }
 }
 
