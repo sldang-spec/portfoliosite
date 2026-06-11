@@ -79,14 +79,21 @@ export default function ScrollAvatar() {
     handleScroll()
     window.addEventListener('scroll', handleScroll, { passive: true })
 
+    // Debounced — rebuilding the GSAP tween on every resize event causes
+    // visible thrash mid-drag; once at the end is all that's needed.
+    let resizeTimer = null
     const handleResize = () => {
-      createAnimation()
-      ScrollTrigger.refresh()
+      clearTimeout(resizeTimer)
+      resizeTimer = setTimeout(() => {
+        createAnimation()
+        ScrollTrigger.refresh()
+      }, 150)
     }
 
     window.addEventListener('resize', handleResize)
 
     return () => {
+      clearTimeout(resizeTimer)
       window.removeEventListener('scroll', handleScroll)
       window.removeEventListener('resize', handleResize)
       if (animRef.current) {
@@ -98,14 +105,30 @@ export default function ScrollAvatar() {
 
   function handleClick() {
     if (isHome) {
-      window.scrollTo({ top: 0, behavior: 'smooth' })
+      const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+      window.scrollTo({ top: 0, behavior: prefersReducedMotion ? 'auto' : 'smooth' })
     } else {
       navigate('/')
     }
   }
 
+  function handleKeyDown(e) {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault()
+      handleClick()
+    }
+  }
+
   return (
-    <div ref={ref} className="scroll-avatar" onClick={handleClick}>
+    <div
+      ref={ref}
+      className="scroll-avatar"
+      onClick={handleClick}
+      onKeyDown={handleKeyDown}
+      role="button"
+      tabIndex={0}
+      aria-label={isHome ? 'Scroll back to top' : 'Go to home page'}
+    >
       <img src="/img/avatar.png" alt="Steven" />
     </div>
   )

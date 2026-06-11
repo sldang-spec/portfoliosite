@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom'
 import './Footer.css'
 
 export default function Footer() {
@@ -6,7 +7,7 @@ export default function Footer() {
       <div className="footer__main">
 
         <div className="footer__left">
-          <a href="/" className="footer__back">← Back Home</a>
+          <Link to="/" className="footer__back">← Back Home</Link>
           <img src="/img/plant gif.gif" alt="" className="footer__plant" />
         </div>
 

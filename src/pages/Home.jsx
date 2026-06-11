@@ -84,6 +84,8 @@ function WorkCard({ p }) {
           alt={p.title}
           className="wcard__img"
           style={{ objectFit: p.objectFit || 'cover' }}
+          loading="lazy"
+          decoding="async"
         />
         <div className="wcard__top">
           <span className="wcard__num">{p.num} | {p.title}</span>
@@ -109,6 +111,29 @@ function MiscCard({ item, className }) {
   const videoRef = useRef(null)
   const emojiRef = useRef(null)
 
+  // Only play videos while they're actually in view — saves CPU/battery
+  // and guarantees unmuted audio can never leak from an offscreen card.
+  useEffect(() => {
+    const video = videoRef.current
+    if (!video) return
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          video.play().catch(() => {})
+        } else {
+          video.pause()
+          video.muted = true
+          if (emojiRef.current) emojiRef.current.textContent = '🔇'
+        }
+      },
+      { threshold: 0.25 }
+    )
+
+    observer.observe(video)
+    return () => observer.disconnect()
+  }, [])
+
   const handleEnter = () => {
     if (videoRef.current) videoRef.current.muted = false
     if (emojiRef.current) emojiRef.current.textContent = '🔊'
@@ -127,8 +152,8 @@ function MiscCard({ item, className }) {
       onMouseLeave={item.isVideo ? handleLeave : undefined}
     >
       {item.isVideo
-        ? <video ref={videoRef} src={item.src} autoPlay muted loop playsInline className="misc-card__media" />
-        : <img src={item.thumb} alt={item.title} className="misc-card__media" />
+        ? <video ref={videoRef} src={item.src} autoPlay muted loop playsInline preload="metadata" className="misc-card__media" />
+        : <img src={item.thumb} alt={item.title} className="misc-card__media" loading="lazy" decoding="async" />
       }
       <div className="misc-card__overlay" />
       {item.isVideo && (

@@ -214,7 +214,7 @@ export default function Navbar() {
   const shouldApplyDarkBg = isDark && !worksActive
 
   return (
-    <nav className={`navbar ${isHome ? 'navbar--home' : 'navbar--inner'} ${shouldApplyDarkBg ? 'navbar--dark-bg' : ''}`}>
+    <nav aria-label="Main" className={`navbar ${isHome ? 'navbar--home' : 'navbar--inner'} ${shouldApplyDarkBg ? 'navbar--dark-bg' : ''}`}>
       {!isHome && (
         <Link to="/" className="navbar__logo">
           <img src="/img/avatar.png" alt="Steven" />

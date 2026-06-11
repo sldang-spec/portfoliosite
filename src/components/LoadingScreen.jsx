@@ -9,7 +9,9 @@ export default function LoadingScreen() {
   useEffect(() => {
     const MIN_LOAD_TIME = 1500 // 1.5 seconds for gif to play
     let startTime = Date.now()
-    let pageHasLoaded = false
+    // If the load event already fired before mount, the listener below
+    // would never run and the loader would hang — check readyState first.
+    let pageHasLoaded = document.readyState === 'complete'
 
     // Update progress bar over the minimum load time
     let progressInterval = setInterval(() => {
